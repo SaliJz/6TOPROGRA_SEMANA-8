@@ -15,6 +15,7 @@ public class SituationUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI txtEndingTitle;
     [SerializeField] private TextMeshProUGUI txtEndingMessage;
     [SerializeField] private Button btnRestart;
+    [SerializeField] private Button btnContinue;
 
     public void DisplaySituation(SituationData data, System.Action<SituationOption> onSelect)
     {
@@ -26,6 +27,19 @@ public class SituationUI : MonoBehaviour
             var go = Instantiate(optionButtonPrefab, optionsContainer);
             go.GetComponentInChildren<TextMeshProUGUI>().text =
                 LocalizationManager.GetText(opt.labelES, opt.labelEN);
+            go.GetComponent<Button>().onClick.AddListener(() => onSelect(captured));
+        }
+    }
+
+    public void DisplayChoices(ChoiceRuntimeNode[] choices, System.Action<ChoiceRuntimeNode> onSelect)
+    {
+        ClearOptions();
+        foreach (var choice in choices)
+        {
+            var captured = choice;
+            var go = Instantiate(optionButtonPrefab, optionsContainer);
+            go.GetComponentInChildren<TextMeshProUGUI>().text = 
+                LocalizationManager.GetText(choice.labelES, choice.labelEN);
             go.GetComponent<Button>().onClick.AddListener(() => onSelect(captured));
         }
     }
@@ -75,8 +89,22 @@ public class SituationUI : MonoBehaviour
 
     public void HideEnding() => panelEnding.SetActive(false);
 
-    private void ClearOptions()
+    public void ClearOptions()
     {
         foreach (Transform child in optionsContainer) Destroy(child.gameObject);
     }
+
+    public void ShowContinueButton(System.Action onContinue)
+    {
+        btnContinue.gameObject.SetActive(true);
+        btnContinue.onClick.RemoveAllListeners();
+        btnContinue.onClick.AddListener(() => onContinue());
+    }
+
+    public void HideContinueButton()
+    {
+        btnContinue.gameObject.SetActive(false);
+    }
+
+    public void DisplayText(string text) => txtSituationText.text = text;
 }

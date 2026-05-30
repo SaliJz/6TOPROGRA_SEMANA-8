@@ -17,6 +17,8 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
     private int currentIndex = 0;
     private int karma = 0;
 
+    private System.Action<CombatOutcome> pendingCombatCallback;
+
     private void Start()
     {
         panelSituation.SetActive(false);
@@ -71,14 +73,39 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
         if (effect.damageChange > 0) player.IncreaseDamage(effect.damageChange);
 
         if (effect.itemsGiven != null)
+        {
             foreach (var itemData in effect.itemsGiven)
+            {
                 player.Inventory.AddItem(itemData.Build());
+            }
+        }
+    }
+
+    public void ApplyEffectFromGraph(ChoiceRuntimeNode choice)
+    {
+        if (choice.hpChange > 0) player.Heal(choice.hpChange);
+        else if (choice.hpChange < 0) player.TakeDamage(-choice.hpChange);
+
+        if (choice.damageChange > 0) player.IncreaseDamage(choice.damageChange);
+
+        karma += choice.karmaChange;
+
+        if (!player.IsAlive) TriggerGameOver();
     }
 
     private void TriggerCombat(Enemy enemy)
     {
         combatController.gameObject.SetActive(true);
         combatController.StartCombat(player, enemy, this);
+    }
+
+    public void StartCombatFromGraph(CombatRuntimeNode node, System.Action<CombatOutcome> onFinished)
+    {
+        string enemyName = LocalizationManager.GetText(node.enemyNameES, node.enemyNameEN);
+        var enemy = new Enemy(enemyName, node.enemyHP, node.enemyDamage);
+
+        pendingCombatCallback = onFinished;
+        TriggerCombat(enemy);
     }
 
     private void TriggerEnding()
@@ -89,6 +116,12 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
                                          EndingType.Bad;
 
         situationUI.DisplayEnding(ending, player, OnRestartFromEnding);
+    }
+
+    public void TriggerEndingFromGraph(EndingRuntimeNode node)
+    {
+        panelSituation.SetActive(false);
+        situationUI.DisplayEnding(node.endingType, player, OnRestartFromEnding);
     }
 
     private void TriggerGameOver() => situationUI.DisplayGameOver(OnRetryFromGameOver);
@@ -131,6 +164,9 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
     public void OnCombatEnded(CombatOutcome outcome)
     {
         combatController.gameObject.SetActive(false);
+
+        pendingCombatCallback?.Invoke(outcome);
+        pendingCombatCallback = null;
 
         switch (outcome)
         {
