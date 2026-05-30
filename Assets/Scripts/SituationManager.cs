@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class SituationManager : MonoBehaviour, ICombatEventListener
 {
+    #region Inspector - Datos Del Juego
+
     [Header("Datos del juego")]
     [SerializeField] private SituationData[] situations;
+
+    #endregion
+
+    #region Inspector - Referencias De UI
 
     [Header("Referencias de UI")]
     [SerializeField] private GameObject panelSetup;
@@ -13,14 +19,27 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
     [SerializeField] private SituationUI situationUI;
     [SerializeField] private CombatController combatController;
 
+    #endregion
+
+    #region Internal State
+
     private Player player;
     private int currentIndex = 0;
     private int karma = 0;
+    private System.Action<CombatOutcome> pendingCombatCallback;
+
+    #endregion
+
+    #region Unity Lifecycle
 
     private void Start()
     {
         panelSituation.SetActive(false);
     }
+
+    #endregion
+
+    #region Initialization & State Reset
 
     public void InitPlayer(string name, int maxHealth, int damage)
     {
@@ -34,6 +53,24 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
         karma = 0;
         LoadSituation(0);
     }
+
+    private void ResetToStart()
+    {
+        panelSituation.SetActive(false);
+        combatController.gameObject.SetActive(false);
+        situationUI.HideGameOver();
+        situationUI.HideEnding();
+
+        panelSetup.SetActive(true);
+
+        karma = 0;
+        currentIndex = 0;
+        player = null;
+    }
+
+    #endregion
+
+    #region Situation Core Logic
 
     private void LoadSituation(int index)
     {
@@ -71,9 +108,29 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
         if (effect.damageChange > 0) player.IncreaseDamage(effect.damageChange);
 
         if (effect.itemsGiven != null)
+        {
             foreach (var itemData in effect.itemsGiven)
+            {
                 player.Inventory.AddItem(itemData.Build());
+            }
+        }
     }
+
+    public void ApplyEffectFromGraph(ChoiceRuntimeNode choice)
+    {
+        if (choice.hpChange > 0) player.Heal(choice.hpChange);
+        else if (choice.hpChange < 0) player.TakeDamage(-choice.hpChange);
+
+        if (choice.damageChange > 0) player.IncreaseDamage(choice.damageChange);
+
+        karma += choice.karmaChange;
+
+        if (!player.IsAlive) TriggerGameOver();
+    }
+
+    #endregion
+
+    #region Combat Management
 
     private void TriggerCombat(Enemy enemy)
     {
@@ -81,40 +138,13 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
         combatController.StartCombat(player, enemy, this);
     }
 
-    private void TriggerEnding()
+    public void StartCombatFromGraph(CombatRuntimeNode node, System.Action<CombatOutcome> onFinished)
     {
-        panelSituation.SetActive(false);
-        EndingType ending = karma >= 5 ? EndingType.Good :
-                            karma >= 0 ? EndingType.Neutral :
-                                         EndingType.Bad;
+        string enemyName = LocalizationManager.GetText(node.enemyNameES, node.enemyNameEN);
+        var enemy = new Enemy(enemyName, node.enemyHP, node.enemyDamage);
 
-        situationUI.DisplayEnding(ending, player, OnRestartFromEnding);
-    }
-
-    private void TriggerGameOver() => situationUI.DisplayGameOver(OnRetryFromGameOver);
-
-    private void OnRetryFromGameOver()
-    {
-        ResetToStart();
-    }
-
-    public void OnRestartFromEnding()
-    {
-        ResetToStart();
-    }
-
-    private void ResetToStart()
-    {
-        panelSituation.SetActive(false);
-        combatController.gameObject.SetActive(false);
-        situationUI.HideGameOver();
-        situationUI.HideEnding();
-
-        panelSetup.SetActive(true);
-
-        karma = 0;
-        currentIndex = 0;
-        player = null;
+        pendingCombatCallback = onFinished;
+        TriggerCombat(enemy);
     }
 
     private Enemy BuildEnemy(EnemyData data)
@@ -132,6 +162,15 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
     {
         combatController.gameObject.SetActive(false);
 
+        // Flujo del CombatResolver
+        if (pendingCombatCallback != null)
+        {
+            pendingCombatCallback.Invoke(outcome);
+            pendingCombatCallback = null;
+            return;
+        }
+
+        // Flujo clásico
         switch (outcome)
         {
             case CombatOutcome.PlayerWon:
@@ -146,4 +185,38 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
                 break;
         }
     }
+
+    #endregion
+
+    #region Game Over & Endings
+
+    private void TriggerEnding()
+    {
+        panelSituation.SetActive(false);
+        EndingType ending = karma >= 5 ? EndingType.Good :
+                            karma >= 0 ? EndingType.Neutral :
+                                         EndingType.Bad;
+
+        situationUI.DisplayEnding(ending, player, OnRestartFromEnding);
+    }
+
+    public void TriggerEndingFromGraph(EndingRuntimeNode node)
+    {
+        panelSituation.SetActive(false);
+        situationUI.DisplayEnding(node.endingType, player, OnRestartFromEnding);
+    }
+
+    private void TriggerGameOver() => situationUI.DisplayGameOver(OnRetryFromGameOver);
+
+    private void OnRetryFromGameOver()
+    {
+        ResetToStart();
+    }
+
+    public void OnRestartFromEnding()
+    {
+        ResetToStart();
+    }
+
+    #endregion
 }
