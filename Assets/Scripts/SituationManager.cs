@@ -162,9 +162,15 @@ public class SituationManager : MonoBehaviour, ICombatEventListener
     {
         combatController.gameObject.SetActive(false);
 
-        pendingCombatCallback?.Invoke(outcome);
-        pendingCombatCallback = null;
+        // Flujo del CombatResolver
+        if (pendingCombatCallback != null)
+        {
+            pendingCombatCallback.Invoke(outcome);
+            pendingCombatCallback = null;
+            return;
+        }
 
+        // Flujo clásico
         switch (outcome)
         {
             case CombatOutcome.PlayerWon:
