@@ -1,0 +1,182 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: idiomas_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 0959b9b885c06b244a4fd50d48e773b5, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1
+    m_Localized: Enter a name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3
+    m_Localized: 'You''re walking through a forest when you come to a fork in the
+      path.
+
+      Two paths lie before you.
+
+      One is bathed in light, with
+      vibrant flowers and a peaceful atmosphere.
+
+      The other is shrouded in
+      an eerie darkness, silent and mysterious.
+
+      An old wooden sign reads:
+
+      "Choose
+      your destiny."'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4
+    m_Localized: "As you walk along, you notice the unusual flowers.\nAfter a while,
+      an old man appears out of nowhere by the side of the path.\nLeaning on a cane,
+      he observes you with a weary smile.\n\u2014\"Traveler,\" he says, \"I haven't
+      eaten in days. Do you have any food to share?\"\nThe old man extends his hand
+      and awaits your reply."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5
+    m_Localized: "\nYou continue on your way. At first, everything seems normal,
+      but after a few minutes, you notice something strange.\nThe ground sounds hollow
+      beneath your feet. You take another step.\nThe earth begins to feel increasingly
+      weak and cracked.\nSmall stones fall through the cracks and take several seconds
+      to reach the bottom.\nThen you realize you are walking on very fragile ground.\n\xBFYou
+      need to make a decision quickly?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6
+    m_Localized: "You decide to proceed cautiously.\nYou arrive at an enormous library
+      that seems to have been hidden for centuries.\nIts doors are open.\nUpon entering,
+      you discover endless shelves filled with books that emit a soft golden light.\nSuddenly,
+      you hear whispers throughout the room.\n\u2014\"Read me...\"\n\u2014\"Here...\"\n\"I
+      have secrets that no one knows...\" The books glow brighter and brighter, as
+      if trying to get your attention.\nSome shift slightly on the shelves, waiting
+      to be chosen.\nDo you have to make a decision quickly?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7
+    m_Localized: "You continue on your way, leaving the strange library behind. As
+      you walk, the wind carries a desperate cry.\n\u2014\"Help!\"\nYou run toward
+      the sound and reach the edge of a cliff.\nPeering over, you see an adventurer
+      hanging from a branch jutting out from the rock face.\nIt seems he slipped
+      and fell, but the branch managed to break his fall.\n\u2014\"Please! It won't
+      hold much longer! Help me!\"\nThe branch creaks dangerously under his weight.\nIt
+      doesn't look like it will last much longer.\nDo you have to make a decision
+      quickly?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8
+    m_Localized: 'You decide to continue your journey. After leaving the cliff behind,
+      you reach another fork in the path.
+
+      To the left lies an enormous treasure:
+      mountains of gold, glittering jewels, and open chests overflowing with riches.
+
+      The
+      strange thing is that it''s in plain sight, with no apparent traps, no guards,
+      and only a few steps away.
+
+      To the right is an ordinary path. It doesn''t
+      seem special, but it continues deeper into the forest.
+
+      Do you have to
+      make a decision quickly?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9
+    m_Localized: "You continue walking when, suddenly, a silver mirror appears before
+      you with a flash of light.\nIts surface shimmers like still water. Then a voice
+      emerges from it:\n\u2014\"If you look at me, you will see your greatest fear.\"\nThe
+      mirror remains motionless, waiting.\nFor a moment, the surface begins to show
+      shadows and indistinct shapes\nas if trying to reveal something hidden within
+      you."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10
+    m_Localized: The fight begins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11
+    m_Localized: illuminated path
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12
+    m_Localized: dark path
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13
+    m_Localized: give him your ration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14
+    m_Localized: ignore it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15
+    m_Localized: Read the books
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16
+    m_Localized: Burn the books
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17
+    m_Localized: help him
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18
+    m_Localized: leave him to his fate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19
+    m_Localized: take the treasure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20
+    m_Localized: jump carefully
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21
+    m_Localized: run fast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22
+    m_Localized: face it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23
+    m_Localized: break it
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24
+    m_Localized: Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25
+    m_Localized: Items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26
+    m_Localized: Escape
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
