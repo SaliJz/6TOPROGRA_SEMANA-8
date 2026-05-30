@@ -1,5 +1,0 @@
-Rodrigo - Programar el comportamiento del jugador y el inventario.
-Emerson - Programar el comportamiento de los enemigos.
-Jorge 	- Programar los objetos y la integración de los comportamientos.
-Joaquin - Programar el gestor del combate por turnos.
-Gian 	- Programar el gestor de situaciones y el gestor principal.

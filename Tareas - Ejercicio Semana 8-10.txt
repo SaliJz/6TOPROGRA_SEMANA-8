@@ -1,0 +1,5 @@
+Tareas - Ejercicio Semana 8-10:
+-Jorge: Addressables + personajes 2D y 3D para los retratos
+-Joaquin: Graph toolkit
+-Rodrigo: localización 
+-Emerson: Revisión de acoplado de todo + pantalla de inicio con opción de cambio de idioma
