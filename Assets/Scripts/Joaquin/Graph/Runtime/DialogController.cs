@@ -6,15 +6,30 @@ using UnityEngine;
 
 public class DialogController : MonoBehaviour
 {
+    #region Inspector - References
+
     [SerializeField] private SituationUI situationUI;
     [SerializeField] private GenericRuntimeGraph dialogGraph;
     [SerializeField] private SituationManager situationManager;
+
+    #endregion
+
+    #region Internal State
 
     private int currentIndex = 0;
     private TaskCompletionSource<ChoiceRuntimeNode> choiceTcs;
     private TaskCompletionSource<CombatOutcome> combatTcs;
     private TaskCompletionSource<bool> continueTcs;
+
+    #endregion
+
+    #region Public Properties & Events
+
     public SituationManager SituationManager => situationManager;
+
+    #endregion
+
+    #region Dialog Control & Flow
 
     public void DisplayText(string text)
     {
@@ -73,6 +88,10 @@ public class DialogController : MonoBehaviour
         await continueTcs.Task;
     }
 
+    #endregion
+
+    #region Event Callbacks
+
     private void OnCombatFinished(CombatOutcome outcome)
     {
         combatTcs?.SetResult(outcome);
@@ -89,4 +108,6 @@ public class DialogController : MonoBehaviour
         situationUI.HideContinueButton();
         continueTcs?.SetResult(true);
     }
+
+    #endregion
 }

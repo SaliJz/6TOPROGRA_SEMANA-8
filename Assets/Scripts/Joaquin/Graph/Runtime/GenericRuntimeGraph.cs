@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class GenericRuntimeGraph : ScriptableObject
 {
+    #region Inspector - Data
+
     [SerializeReference] public List<GenericRuntimeNode> nodes = new List<GenericRuntimeNode>();
+
+    #endregion
+
+    #region Graph Operations
 
     public ChoiceRuntimeNode[] GetChoicesAfter(int textNodeIndex)
     {
@@ -13,4 +19,6 @@ public class GenericRuntimeGraph : ScriptableObject
             .Where(c => c.parentNodeIndex == textNodeIndex)
             .ToArray();
     }
+
+    #endregion
 }
