@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: idiomas Shared Data
+  m_Name: tablas Shared Data
   m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
-  m_TableCollectionName: idiomas
-  m_TableCollectionNameGuidString: 0959b9b885c06b244a4fd50d48e773b5
+  m_TableCollectionName: tablas
+  m_TableCollectionNameGuidString: 802c9751d6f24dd43a0af982cf8a6349
   m_Entries:
   - m_Id: 1
     m_Key: G001
@@ -122,11 +122,11 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 6416483359286100280
+    rid: 6416483378251169833
   references:
     version: 2
     RefIds:
-    - rid: 6416483359286100280
+    - rid: 6416483378251169833
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1780148122521
+        m_CustomEpoch: 1780177210018

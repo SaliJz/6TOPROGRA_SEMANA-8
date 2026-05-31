@@ -70,6 +70,7 @@ public class DialogController : MonoBehaviour
         choiceTcs = new TaskCompletionSource<ChoiceRuntimeNode>();
         situationUI.DisplayChoices(choices, OnChoiceButtonPressed);
         return await choiceTcs.Task;
+
     }
 
     public async Task<CombatOutcome> TriggerCombat(CombatRuntimeNode node)
@@ -107,6 +108,7 @@ public class DialogController : MonoBehaviour
     {
         situationUI.HideContinueButton();
         continueTcs?.SetResult(true);
+        
     }
 
     #endregion
